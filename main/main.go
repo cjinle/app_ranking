@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	appranking.Hello()
-	appranking.Request("game", "TH", "2022-09-03")
+	// appranking.Request("game", "TH", "2022-09-03")
+	appranking.HandleRanking("2022-09-03")
 }
