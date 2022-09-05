@@ -10,6 +10,7 @@ CREATE TABLE `app` (
   `release_date` varchar(50) NOT NULL DEFAULT '',
   `updated_date` varchar(50) NOT NULL DEFAULT '',
   `rating` float NOT NULL DEFAULT '0',
+  `rating_count` int(11) NOT NULL DEFAULT '0',
   `price` float NOT NULL DEFAULT '0',
   `version` varchar(50) NOT NULL DEFAULT '',
   `downloads` int(11) NOT NULL DEFAULT '0',
@@ -26,12 +27,13 @@ CREATE TABLE `app` (
 CREATE TABLE `rank` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rank_date` varchar(10) NOT NULL,
+  `rank_type` tinyint(4) NOT NULL,
   `rank` int(11) NOT NULL DEFAULT '0',
   `country` varchar(10) NOT NULL DEFAULT '',
   `cat` varchar(50) NOT NULL DEFAULT '',
   `app_id` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `rank_date` (`rank_date`,`rank`,`country`,`cat`)
+  UNIQUE KEY `rank_date` (`rank_date`,`rank_type`,`rank`,`country`,`cat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `publisher` (
