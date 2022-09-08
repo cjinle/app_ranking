@@ -24,14 +24,26 @@ CREATE TABLE `app` (
   UNIQUE KEY `app_id` (`app_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `rank` (
+CREATE TABLE `rank_TH_game_card0` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rank_date` varchar(10) NOT NULL,
-  `rank_type` tinyint(4) NOT NULL,
+  `rank_date` varchar(10) NOT NULL DEFAULT '',
   `rank` int(11) NOT NULL DEFAULT '0',
-  `country` varchar(10) NOT NULL DEFAULT '',
-  `cat` varchar(50) NOT NULL DEFAULT '',
   `app_id` varchar(200) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rank_date` (`rank_date`,`rank_type`,`rank`,`country`,`cat`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `rank_TH_game_card1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rank_date` varchar(10) NOT NULL DEFAULT '',
+  `rank` int(11) NOT NULL DEFAULT '0',
+  `app_id` varchar(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `rank_TH_game_card2` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rank_date` varchar(10) NOT NULL DEFAULT '',
+  `rank` int(11) NOT NULL DEFAULT '0',
+  `app_id` varchar(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8;

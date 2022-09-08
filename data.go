@@ -29,16 +29,17 @@ func HandleRanking(date string) {
 		fmt.Println("HandleRanking", err)
 		return
 	}
-	fmt.Println(appDatas)
 	if len(appDatas) == 0 {
 		return
 	}
-	for k, v := range appDatas {
+	CleanRank(0, date, COUNTRY, CAT)
+	CleanRank(1, date, COUNTRY, CAT)
+	CleanRank(2, date, COUNTRY, CAT)
+	for _, v := range appDatas {
 		if len(v) == 0 {
 			continue
 		}
-		CleanRank(int32(k), date, COUNTRY, CAT)
-		for _, vv := range v {
+		for rankType, vv := range v {
 			app := &App{
 				AppId:            vv.AppId,
 				Name:             vv.Name,
@@ -60,20 +61,23 @@ func HandleRanking(date string) {
 				ShortDescription: vv.ShortDescription,
 			}
 			app.Update()
-			AddRank(int32(k), vv.Rank, date, COUNTRY, CAT, vv.AppId)
+			AddRank(int32(rankType), vv.Rank, date, COUNTRY, CAT, vv.AppId)
 		}
 	}
 }
 
 func CleanRank(rank_type int32, rank_date, country, cat string) error {
-	query := "DELETE FROM rank WHERE rank_type=? AND rank_date=? AND country=? AND cat=?"
+	tb := fmt.Sprintf("rank_%s_%s%d", country, cat, rank_type)
+	query := fmt.Sprintf("DELETE FROM %s WHERE rank_type=? AND rank_date=? AND country=? AND cat=?", tb)
 	_, err := connect.DB.Exec(query, rank_type, rank_date, country, cat)
 	return err
 }
 
 func AddRank(rank_type, rank int32, rank_date, country, cat, app_id string) error {
-	query := "INSERT IGNORE INTO rank (rank_type,rank,rank_date,country,cat,app_id) VALUES (?,?,?,?,?,?)"
-	_, err := connect.DB.Exec(query, rank_type, rank, rank_date, country, cat, app_id)
+	tb := fmt.Sprintf("rank_%s_%s%d", country, cat, rank_type)
+	query := fmt.Sprintf("INSERT INTO %s SET rank_date=?,rank=?,app_id=?", tb)
+	fmt.Println(rank_type, rank, rank_date, country, cat, app_id)
+	_, err := connect.DB.Exec(query, rank_date, rank, app_id)
 	return err
 }
 
